@@ -4,12 +4,9 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django.utils.html import format_html
 from django.utils.timesince import timesince
-from import_export.admin import ImportExportMixin
 
 from jazzmin.utils import attr
-from .models import Book, Author, Genre
-from .resources import BookResource
-
+from .models import Author, Book, Genre
 from ..loans.admin import BookLoanInline
 
 admin.site.unregister(User)
@@ -20,16 +17,14 @@ class BooksInline(admin.TabularInline):
 
 
 @admin.register(Book)
-class BookAdmin(ImportExportMixin, admin.ModelAdmin):
-    resource_class = BookResource
+class BookAdmin(admin.ModelAdmin):
     fieldsets = (
         ("general", {"fields": ("title", "author", "library")}),
-        ("other", {"fields": ("genre", "summary", "isbn", "published_on")}),
+        ("other", {"fields": ("genre", "summary", "isbn", "published_on", "pages")}),
     )
     raw_id_fields = ("author",)
-    list_display = ("__str__", "title", "author")
+    list_display = ("__str__", "title", "author", "pages")
     readonly_fields = ("__str__",)
-    list_filter = ("author", "genre")
     list_per_page = 20
     list_max_show_all = 100
     list_editable = ("title",)

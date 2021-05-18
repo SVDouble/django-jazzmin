@@ -1,8 +1,8 @@
 import pytest
 
 from jazzmin.compat import reverse
-from .test_app.library.factories import BookFactory
 from .test_app.library.books.models import Book
+from .test_app.library.factories import BookFactory
 
 
 @pytest.mark.django_db
@@ -131,10 +131,11 @@ def test_detail(admin_client):
         "admin/widgets/foreign_key_raw_id.html": 1,
         "admin/widgets/related_widget_wrapper.html": 4,
         "admin/widgets/split_datetime.html": 2,
-        "django/forms/widgets/attrs.html": 46,
+        "django/forms/widgets/attrs.html": 47,
         "django/forms/widgets/date.html": 5,
         "django/forms/widgets/hidden.html": 6,
-        "django/forms/widgets/input.html": 18,
+        "django/forms/widgets/input.html": 19,
+        "django/forms/widgets/number.html": 1,
         "django/forms/widgets/select.html": 6,
         "django/forms/widgets/select_option.html": 21,
         "django/forms/widgets/text.html": 4,
@@ -161,6 +162,7 @@ def test_detail(admin_client):
         "django/forms/widgets/date.html",
         "django/forms/widgets/hidden.html",
         "django/forms/widgets/input.html",
+        "django/forms/widgets/number.html",
         "django/forms/widgets/select.html",
         "django/forms/widgets/select_option.html",
         "django/forms/widgets/text.html",
@@ -190,54 +192,44 @@ def test_list(admin_client):
 
     # The number of times each template was rendered
     assert render_counts == {
-        "admin/filter.html": 2,
-        "admin/base.html": 1,
-        "admin/base_site.html": 1,
-        "admin/date_hierarchy.html": 1,
-        "admin/change_list_object_tools.html": 1,
-        "admin/change_list.html": 1,
-        "admin/change_list_results.html": 1,
-        "admin/pagination.html": 1,
-        "admin/search_form.html": 1,
-        "admin/actions.html": 2,
-        "admin/import_export/change_list.html": 1,
-        "admin/import_export/change_list_export_item.html": 1,
-        "admin/import_export/change_list_import_export.html": 1,
-        "admin/import_export/change_list_import_item.html": 1,
-        "django/forms/widgets/checkbox.html": 5,
-        "django/forms/widgets/text.html": 5,
-        "django/forms/widgets/select_option.html": 4,
-        "django/forms/widgets/select.html": 2,
-        "django/forms/widgets/input.html": 21,
-        "django/forms/widgets/hidden.html": 11,
-        "django/forms/widgets/attrs.html": 27,
-        "jazzmin/includes/ui_builder_panel.html": 1,
+        'admin/actions.html': 2,
+        'admin/base.html': 1,
+        'admin/base_site.html': 1,
+        'admin/change_list.html': 1,
+        'admin/change_list_object_tools.html': 1,
+        'admin/change_list_results.html': 1,
+        'admin/date_hierarchy.html': 1,
+        'admin/pagination.html': 1,
+        'admin/search_form.html': 1,
+        'django/forms/widgets/attrs.html': 27,
+        'django/forms/widgets/checkbox.html': 5,
+        'django/forms/widgets/hidden.html': 11,
+        'django/forms/widgets/input.html': 21,
+        'django/forms/widgets/select.html': 2,
+        'django/forms/widgets/select_option.html': 4,
+        'django/forms/widgets/text.html': 5,
+        'jazzmin/includes/ui_builder_panel.html': 1
     }
 
     # The templates that were used
     assert set(templates_used) == {
-        "admin/filter.html",
-        "admin/base.html",
-        "admin/base_site.html",
-        "admin/date_hierarchy.html",
-        "admin/change_list_object_tools.html",
-        "admin/change_list.html",
-        "admin/change_list_results.html",
-        "admin/pagination.html",
-        "admin/search_form.html",
-        "admin/actions.html",
-        "admin/import_export/change_list.html",
-        "admin/import_export/change_list_export_item.html",
-        "admin/import_export/change_list_import_export.html",
-        "admin/import_export/change_list_import_item.html",
-        "django/forms/widgets/checkbox.html",
-        "django/forms/widgets/text.html",
-        "django/forms/widgets/select_option.html",
-        "django/forms/widgets/select.html",
-        "django/forms/widgets/input.html",
-        "django/forms/widgets/hidden.html",
-        "django/forms/widgets/attrs.html",
-        "jazzmin/includes/ui_builder_panel.html",
+        'admin/actions.html',
+        'admin/base.html',
+        'admin/base_site.html',
+        'admin/change_list.html',
+        'admin/change_list_object_tools.html',
+        'admin/change_list_results.html',
+        'admin/date_hierarchy.html',
+        'admin/pagination.html',
+        'admin/search_form.html',
+        'django/forms/widgets/attrs.html',
+        'django/forms/widgets/checkbox.html',
+        'django/forms/widgets/hidden.html',
+        'django/forms/widgets/input.html',
+        'django/forms/widgets/select.html',
+        'django/forms/widgets/select_option.html',
+        'django/forms/widgets/text.html',
+        'jazzmin/includes/ui_builder_panel.html'
     }
 
 
