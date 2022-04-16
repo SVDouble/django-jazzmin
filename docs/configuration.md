@@ -9,8 +9,11 @@ JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)
     "site_title": "Library Admin",
 
-    # Title on the brand, and login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
+    # Title on the login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
     "site_header": "Library",
+
+    # Title on the brand (19 chars max) (defaults to current_admin_site.site_header if absent or None)
+    "site_brand": "Library",
 
     # Logo to use for your site, must be present in static files, used for brand on top left
     "site_logo": "books/img/logo.png",
@@ -30,7 +33,7 @@ JAZZMIN_SETTINGS = {
     # The model admin to search from the search bar, search bar omitted if excluded
     "search_model": "auth.User",
 
-    # Field name on user model that contains avatar image
+    # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
     "user_avatar": None,
 
     ############
@@ -280,6 +283,25 @@ class BookAdmin(admin.ModelAdmin):
 
     # Order the sections within the change form
     jazzmin_section_order = ("book loans", "general", "other")
+```
+
+## Filter perfomance
+If your filter will contain a lot of options, like when you use M2M filter or it's a big filter itself, then rendering every option can hurt user perfomance. This is solved by providing `filter_input_length` dictionary with filter name as the key and the value will determine how much characters should be entered before rendering options.
+
+```python
+@admin.register(Book)
+class BookAdmin(admin.ModelAdmin):
+    resource_class = BookResource
+    fieldsets = (
+        ("general", {"fields": ("title", "author", "library")}),
+        ("other", {"fields": ("genre", "summary", "isbn", "published_on")}),
+    )
+    list_filter = ("title",)
+
+    # Render filtered options only after 5 characters were entered
+    filter_input_length = {
+        "title": 5,
+    }
 ```
 
 ## Language Chooser
